@@ -14,8 +14,3 @@ endforeach(_T ${TESTS})
 add_dune_ug_flags(${TESTS})
 add_dune_mpi_flags(structuredgridfactorytest tensorgridfactorytest)
 add_dune_alugrid_flags(vertexordertest persistentcontainertest)
-
-# We do not want want to build the tests during make all,
-# but just build them on demand
-add_directory_test_target(_test_target)
-add_dependencies(${_test_target} ${TESTS})

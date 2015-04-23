@@ -78,8 +78,3 @@ add_dune_grape_flags(gmshtest-alberta3d)
 foreach(_test ${UG_TESTS})
   add_dune_ug_flags(${_test})
 endforeach(_test ${UG_TESTS})
-
-# We do not want want to build the tests during make all,
-# but just build them on demand
-add_directory_test_target(_test_target)
-add_dependencies(${_test_target} ${ALLTESTS})

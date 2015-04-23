@@ -50,12 +50,12 @@ set(TESTS
 set_property(DIRECTORY APPEND PROPERTY
   COMPILE_DEFINITIONS "DUNE_GRID_EXAMPLE_GRIDS_PATH=\"${PROJECT_SOURCE_DIR}/doc/grids/\"")
 
-add_executable(test-geogrid EXCLUDE_FROM_ALL test-geogrid.cc)
-add_executable(test-identitygrid EXCLUDE_FROM_ALL test-identitygrid.cc)
-add_executable(test-oned EXCLUDE_FROM_ALL test-oned.cc)
-add_executable(test-mcmg-geogrid EXCLUDE_FROM_ALL test-mcmg-geogrid.cc)
-add_executable(test-sgrid EXCLUDE_FROM_ALL test-sgrid.cc)
-add_executable(test-yaspgrid EXCLUDE_FROM_ALL test-yaspgrid.cc)
+add_executable(test-geogrid test-geogrid.cc)
+add_executable(test-identitygrid test-identitygrid.cc)
+add_executable(test-oned test-oned.cc)
+add_executable(test-mcmg-geogrid test-mcmg-geogrid.cc)
+add_executable(test-sgrid test-sgrid.cc)
+add_executable(test-yaspgrid test-yaspgrid.cc)
 add_dune_mpi_flags(test-yaspgrid)
 
 set_property(TARGET test-sgrid test-oned test-yaspgrid test-geogrid APPEND
@@ -65,54 +65,54 @@ set_property(TARGET test-geogrid APPEND PROPERTY COMPILE_DEFINITIONS
   COORDFUNCTION=${COORDFUNCTION} CACHECOORDFUNCTION=${CACHECOORDFUNCTION})
 
 if(ALBERTA_FOUND)
-  add_executable(test-alberta EXCLUDE_FROM_ALL test-alberta.cc)
+  add_executable(test-alberta test-alberta.cc)
   add_dune_alberta_flags(test-alberta WORLDDIM ${GRIDDIM})
-  add_executable(test-alberta-1-1 EXCLUDE_FROM_ALL test-alberta.cc)
+  add_executable(test-alberta-1-1 test-alberta.cc)
   add_dune_alberta_flags(test-alberta-1-1 GRIDDIM 1 WORLDDIM 1)
-  add_executable(test-alberta-1-1-no-deprecated EXCLUDE_FROM_ALL test-alberta.cc)
+  add_executable(test-alberta-1-1-no-deprecated test-alberta.cc)
   add_dune_alberta_flags(test-alberta-1-1-no-deprecated GRIDDIM 1 WORLDDIM 1)
   set_property(TARGET test-alberta-1-1-no-deprecated APPEND PROPERTY COMPILE_DEFINITIONS
     DISABLE_DEPRECATED_METHOD_CHECK=1)
-  add_executable(test-alberta-1-2 EXCLUDE_FROM_ALL test-alberta.cc)
+  add_executable(test-alberta-1-2 test-alberta.cc)
   add_dune_alberta_flags(test-alberta-1-2 WORLDDIM 2)
-  add_executable(test-alberta-2-2 EXCLUDE_FROM_ALL test-alberta.cc)
+  add_executable(test-alberta-2-2 test-alberta.cc)
   add_dune_alberta_flags(test-alberta-2-2 WORLDDIM 2)
-  add_executable(test-alberta-1-3 EXCLUDE_FROM_ALL test-alberta.cc)
+  add_executable(test-alberta-1-3 test-alberta.cc)
   add_dune_alberta_flags(test-alberta-1-3 WORLDDIM 3)
-  add_executable(test-alberta-2-3 EXCLUDE_FROM_ALL test-alberta.cc)
+  add_executable(test-alberta-2-3 test-alberta.cc)
   add_dune_alberta_flags(test-alberta-2-3 WORLDDIM 3)
-  add_executable(test-alberta-3-3 EXCLUDE_FROM_ALL test-alberta.cc)
+  add_executable(test-alberta-3-3 test-alberta.cc)
   add_dune_alberta_flags(test-alberta-3-3 WORLDDIM 3)
-  add_executable(test-alberta-generic EXCLUDE_FROM_ALL test-alberta.cc)
+  add_executable(test-alberta-generic test-alberta.cc)
   add_dune_alberta_flags(test-alberta-generic USE_GENERIC WORLDDIM 2)
 endif(ALBERTA_FOUND)
 
 if(ALUGRID_FOUND)
-  add_executable(test-alugrid EXCLUDE_FROM_ALL test-alugrid.cc)
+  add_executable(test-alugrid test-alugrid.cc)
   add_dune_alugrid_flags(test-alugrid)
 endif(ALUGRID_FOUND)
 
 if(UG_FOUND)
-  add_executable(test-ug EXCLUDE_FROM_ALL test-ug.cc)
+  add_executable(test-ug test-ug.cc)
   add_dune_ug_flags(test-ug)
-  add_executable(test-parallel-ug EXCLUDE_FROM_ALL test-parallel-ug.cc)
+  add_executable(test-parallel-ug test-parallel-ug.cc)
   add_dune_ug_flags(test-parallel-ug)
   # test-loadbalancing
-  add_executable(test-loadbalancing EXCLUDE_FROM_ALL test-loadbalancing.cc)
+  add_executable(test-loadbalancing test-loadbalancing.cc)
   add_dune_ug_flags(test-loadbalancing)
   add_dune_parmetis_flags(test-loadbalancing)
 endif(UG_FOUND)
 
 if(ALUGRID_FOUND AND UG_FOUND)
-  add_executable(test-dgfalu-uggrid-combination EXCLUDE_FROM_ALL test-dgfalu-uggrid-combination.cc)
+  add_executable(test-dgfalu-uggrid-combination test-dgfalu-uggrid-combination.cc)
   add_dune_ug_flags(test-dgfalu-uggrid-combination)
   add_dune_alugrid_flags(test-dgfalu-uggrid-combination)
 endif(ALUGRID_FOUND AND UG_FOUND)
 
-add_executable(testiteratorranges EXCLUDE_FROM_ALL testiteratorranges.cc)
+add_executable(testiteratorranges testiteratorranges.cc)
 add_dune_mpi_flags(testiteratorranges)
 
-add_executable(test-hierarchicsearch EXCLUDE_FROM_ALL test-hierarchicsearch.cc)
+add_executable(test-hierarchicsearch test-hierarchicsearch.cc)
 add_dune_mpi_flags(test-hierarchicsearch)
 
 
@@ -127,11 +127,6 @@ foreach(_exe ${TESTS})
   target_link_libraries(${_exe} "dunegrid" ${DUNE_LIBS})
   add_test(${_exe} ${_exe})
 endforeach(_exe ${TESTS})
-
-# We do not want want to build the tests during make all,
-# but just build them on demand
-add_directory_test_target(_test_target)
-add_dependencies(${_test_target} ${TESTS})
 
 # define HAVE_DUNE_GRID for the dgfparser
 set_property(TARGET ${TESTS} APPEND PROPERTY
